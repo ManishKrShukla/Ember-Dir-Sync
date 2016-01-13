@@ -12,10 +12,20 @@ This updates are one-way, that means the updates are always migrated from source
 
 ## Configurations
 
+Add this snippet in the config/environment.js file : 
+
       syncPath: {
           'source-path': 'Complete-path-to-your-source-directory',
           'destination-path': 'Complete-path-to-your-target-directory'
       },
+      
+For e.g. : 
+
+      var ENV = {
+        syncPath: {
+            'source-path': '/home/manish/dev/ember - 1/templates',
+            'destination-path': '/home/manish/dev/inindca/web-directory/app/templates'
+        },
 
 The execution will be done in the following manner : 
 
