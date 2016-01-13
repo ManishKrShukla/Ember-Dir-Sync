@@ -3,8 +3,6 @@
 var moment = require("moment");
 var fs = require('fs');
 var walk = require('walk');
-var dircompare = require('dir-compare');
-var utils = require('util');
 var fsExtra = require('fs-extra');
 
 function endsWith(source, search) {
