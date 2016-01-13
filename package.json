@@ -1,7 +1,7 @@
 {
   "name": "dir-sync",
-  "version": "0.0.1",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.3",
+  "description": "This is an ember addon that can be used to synchronize two directories.. Add this addon to your project and provide some simple configurations and you're good to go.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -44,6 +44,6 @@
     "ember-cli-babel": "^5.1.5"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dir_sync/config"
   }
 }
