@@ -24,7 +24,7 @@ For e.g. :
       var ENV = {
         syncPath: {
             'source-path': '/home/manish/dev/ember - 1/templates',
-            'destination-path': '/home/manish/dev/inindca/web-directory/app/templates'
+            'destination-path': '/home/manish/dev/ember - 2/app/templates'
         },
 
 The execution will be done in the following manner : 
