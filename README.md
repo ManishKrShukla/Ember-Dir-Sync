@@ -16,6 +16,7 @@ Add this snippet in the config/environment.js file :
       syncPath: {
           'source-path': 'Complete-path-to-your-source-directory',
           'destination-path': 'Complete-path-to-your-target-directory',
+          'filter' : 'extension of the file type to be filtered'
       },
 
 For e.g. :
@@ -24,6 +25,7 @@ For e.g. :
         syncPath: {
             'source-path': '/home/manish/dev/ember - 1/templates',
             'destination-path': '/home/manish/dev/ember - 2/app/templates',
+            'filter' : '.css'
         },
 
 The execution will be done in the following manner :

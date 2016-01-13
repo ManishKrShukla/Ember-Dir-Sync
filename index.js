@@ -25,6 +25,7 @@ module.exports = {
       var source = this.configurations.syncPath['source-path'];
       var dest = this.configurations.syncPath['destination-path'];
 
+      var pattern = this.configurations.syncPath['destination-path'] || '';
 
       var destStats = fs.statSync(this.configurations.syncPath['destination-path']);
 
