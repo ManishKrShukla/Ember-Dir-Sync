@@ -19,82 +19,89 @@ module.exports = {
   config: function(env, baseConfig) {
     this.configurations = baseConfig;
   },
+  buildCounter: 0,
   preBuild: function(result) {
 
     if (this.configurations.syncPath['source-path'] && this.configurations.syncPath['destination-path']) {
       var source = this.configurations.syncPath['source-path'];
       var dest = this.configurations.syncPath['destination-path'];
 
-      var pattern = this.configurations.syncPath['destination-path'] || '';
+      var pattern = this.configurations.syncPath['filter'] || '';
+      var buildCounter = this.configurations.syncPath['build-counter'] || 10;
 
-      var destStats = fs.statSync(this.configurations.syncPath['destination-path']);
+      if (buildCounter != 0 && this.buildCounter != 10) {
+        return;
+      }
 
-      var timeDiff = moment(destStats.mtime).diff(moment(), 'seconds');
+      if (buildCounter === 10) {
+        buildCounter = 0;
+      }
 
-      if (timeDiff > 0) {
-        var files = [];
+      buildCounter++;
 
-        var walker = walk.walk(source, {
-          followLinks: false
-        });
+      var files = [];
 
-        walker.on('file', function(root, stat, next) {
-          if (endsWith(stat.name, pattern)) {
-            files.push(root + '/' + stat.name);
-          }
-          next();
-        });
+      var walker = walk.walk(source, {
+        followLinks: false
+      });
 
-        walker.on('end', function() {
-          console.log("Updates from Dir-Sync");
-          console.log("===========================================================================================================================");
+      walker.on('file', function(root, stat, next) {
+        if (endsWith(stat.name, pattern)) {
+          files.push(root + '/' + stat.name);
+        }
 
-          if (pattern === '') {
-            console.log("There's no pattern defined for filtering files. All the file types will be synchronized");
-          } else {
-            console.log("Only files which follow the pattern " + pattern + " will be synchronized.");
-          }
+        next();
+      });
 
-          var index = 0;
+      walker.on('end', function() {
+        console.log("Updates from Dir-Sync");
+        console.log("===========================================================================================================================");
 
-          for (; index < files.length; index++) {
-            var srcFile = files[index];
-            var destFile = srcFile.replace(source, dest);
-            var exists = true;
+        if (pattern === '') {
+          console.log("There's no pattern defined for filtering files. All the file types will be synchronized");
+        } else {
+          console.log("Only files which follow the pattern " + pattern + " will be synchronized.");
+        }
+
+        var index = 0;
+
+        for (; index < files.length; index++) {
+          var srcFile = files[index];
+          var destFile = srcFile.replace(source, dest);
+          var exists = true;
+
+          try {
 
             try {
-
-              try {
-                fs.statSync(destFile)
-              } catch (err) {
-                exists = false;
-              }
-
-              if (!exists) {
-                console.info('The source file : ' + srcFile + ' doesnt exists at the target and hence has been copied');
-                fsExtra.copySync(srcFile, destFile);
-              } else {
-                var sourceContent = fs.readFileSync(srcFile, 'utf-8');
-                var targetContent = fs.readFileSync(destFile, 'utf-8');
-
-                if (sourceContent != targetContent) {
-                  console.info('The source file : ' + srcFile + ' has been updated and is over-riding the content on the target file : ' + destFile);
-
-                  fsExtra.copySync(srcFile, destFile, {
-                    clobber: true
-                  });
-                }
-              }
-
-            } catch (e) {
-              index--;
+              fs.statSync(destFile)
+            } catch (err) {
+              exists = false;
             }
 
+            if (!exists) {
+              console.info('The source file : ' + srcFile + ' doesnt exists at the target and hence has been copied');
+              fsExtra.copySync(srcFile, destFile);
+            } else {
+              var sourceContent = fs.readFileSync(srcFile, 'utf-8');
+              var targetContent = fs.readFileSync(destFile, 'utf-8');
+
+              if (sourceContent != targetContent) {
+                console.info('The source file : ' + srcFile + ' has been updated and is over-riding the content on the target file : ' + destFile);
+
+                fsExtra.copySync(srcFile, destFile, {
+                  clobber: true
+                });
+              }
+            }
+
+          } catch (e) {
+            index--;
           }
 
-          console.log("===========================================================================================================================");
-        });
-      }
+        }
+
+        console.log("===========================================================================================================================");
+      });
 
     }
 

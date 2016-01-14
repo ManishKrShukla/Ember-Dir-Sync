@@ -2,6 +2,8 @@
 
 This is an ember addon that can be used to synchronize two directories.. Add this addon to your project and provide some simple configurations and you're good to go.
 
+You can provide the file type, which are to synchronized between the folders. By default, the addon will check for updated files on every 10th build of your app. However, you can change this behavior by simply modifying the build-counter param.
+
 This updates are one-way, that means the updates are always migrated from source to target.
 
 ## Installation
@@ -16,7 +18,8 @@ Add this snippet in the config/environment.js file :
       syncPath: {
           'source-path': 'Complete-path-to-your-source-directory',
           'destination-path': 'Complete-path-to-your-target-directory',
-          'filter' : 'extension of the file type to be filtered'
+          'filter' : 'extension of the file type to be filtered',
+          'build-counter' : true
       },
 
 For e.g. :
@@ -25,7 +28,8 @@ For e.g. :
         syncPath: {
             'source-path': '/home/manish/dev/ember - 1/templates',
             'destination-path': '/home/manish/dev/ember - 2/app/templates',
-            'filter' : '.css'
+            'filter' : '.css',
+            'build-counter' : 50,
         },
 
 The execution will be done in the following manner :
