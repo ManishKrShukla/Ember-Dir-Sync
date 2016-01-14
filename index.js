@@ -29,15 +29,15 @@ module.exports = {
       var pattern = this.configurations.syncPath['filter'] || '';
       var buildCounter = this.configurations.syncPath['build-counter'] || 10;
 
-      if (buildCounter != 0 && this.buildCounter != 10) {
+      if (buildCounter != 0 && this.buildCounter != buildCounter) {
         return;
       }
 
-      if (buildCounter === 10) {
-        buildCounter = 0;
+      if (this.buildCounter === buildCounter) {
+        this.buildCounter = 0;
       }
 
-      buildCounter++;
+      this.buildCounter++;
 
       var files = [];
 
