@@ -29,7 +29,9 @@ module.exports = {
       var pattern = this.configurations.syncPath['filter'] || '';
       var buildCounter = this.configurations.syncPath['build-counter'] || 10;
 
-      if (buildCounter != 0 && this.buildCounter != buildCounter) {
+      buildCounter = buildCounter === 0 ? 1 : buildCounter;
+
+      if (this.buildCounter != 0 && this.buildCounter != buildCounter) {
         return;
       }
 
