@@ -1,6 +1,6 @@
 {
   "name": "dir-sync",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "This is an ember addon that can be used to synchronize two directories.. Add this addon to your project and provide some simple configurations and you're good to go.",
   "directories": {
     "doc": "doc",
