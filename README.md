@@ -4,7 +4,8 @@ This is an ember addon that can be used to synchronize two directories.. Add thi
 
 You can provide the file type, which are to synchronized between the folders. By default, the addon will check for updated files on every 10th build of your app. However, you can change this behavior by simply modifying the build-counter param.
 
-This updates are one-way, that means the updates are always migrated from source to target.
+* Please note that once you change the config parameter build-counter, you must restart ember server..
+* This updates are one-way, that means the updates are always migrated from source to target.
 
 ## Installation
 
